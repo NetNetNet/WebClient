@@ -38,7 +38,7 @@ public class Client extends JFrame
 	
 	ArrayList<String> History = new ArrayList<String>();
 	
-	String IP = "90.231.253.163";
+	String IP = "localhost";
 	int PORT = 7657;
 	String latest = "";
 	JTextField inputField = new JTextField(50);
@@ -55,8 +55,6 @@ public class Client extends JFrame
 
 	public static void main(String[] args) throws BadLocationException{
 		new Client();
-		
-		
 	}
 
 	public Client() throws BadLocationException
