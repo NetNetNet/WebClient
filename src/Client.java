@@ -345,17 +345,8 @@ public class Client extends JFrame
 	
 	
 	public static void writeListToFile(String fileName,ArrayList<String> text) throws IOException{
-		 
-				
-				
-				
 		        try {
 		        BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
-		            	
-		        		
-		        		
-		            	
-		        		
 		        		
 		            	for(int x = 0; x < text.size(); x += 1 ){
 		            	
