@@ -1,5 +1,4 @@
 import java.awt.BorderLayout;
-
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -8,15 +7,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-
 import java.util.ArrayList;
-
 
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
@@ -38,7 +36,7 @@ public class Client extends JFrame
 	
 	ArrayList<String> History = new ArrayList<String>();
 	
-	String IP = "90.231.253.163";
+	String IP = "localhost";
 	int PORT = 7657;
 	String latest = "";
 	JTextField inputField = new JTextField(50);
@@ -46,7 +44,9 @@ public class Client extends JFrame
 	JButton search = new JButton("Search");
 	JButton refresh = new JButton("Refresh");
 	JButton historyButton = new JButton("history");
-
+	JButton createWebsite = new JButton("Create website");
+	
+	
 
 
 
@@ -71,8 +71,11 @@ public class Client extends JFrame
 		GridBagConstraints c = new GridBagConstraints();
 		
 		
-		
+		//spacing between components
 		c.insets = new Insets(5,5,5,5);
+		
+
+		//adding buttons and other stuff to the north toolbaar
 		
 		p.add(new JLabel("Adress:"), c);
 		c.gridx = 1;
@@ -89,6 +92,9 @@ public class Client extends JFrame
 		c.gridy = 0;
 		p.add(historyButton,c);
 		c.gridx = 5;
+		c.gridy = 0;
+		p.add(createWebsite,c);
+		c.gridx = 6;
 		c.gridy = 0;
 		
 		
@@ -132,6 +138,7 @@ public class Client extends JFrame
 		search.addActionListener(listneer);
 		refresh.addActionListener(listneer);
 		historyButton.addActionListener(listneer);
+		createWebsite.addActionListener(listneer);
 
 
 
@@ -233,11 +240,29 @@ public class Client extends JFrame
 				}
 
 			}
+			
+
+			else if(e.getSource() == createWebsite){
+
+				try {
+
+					showCreateWebsite();
+			
+
+
+				} catch (Exception ex) {
+					System.out.println(ex);
+				}
+				
+
+
+			}
+			
 			else if(e.getSource() == refresh){
 
 				try {
 
-
+					
 					String userInput = latest;
 
 
@@ -252,37 +277,68 @@ public class Client extends JFrame
 
 
 			}else if(e.getSource() == historyButton){
+				
 				try {
+
+
 					showHistory(History);
+
+
 				} catch (Exception ex) {
 					System.out.println(ex);
 				}
+				
 			}else{
+
 				try {
+
+
 					String userInput = inputField.getText();
 					latest = userInput;
 					
+					
+
 					output.println(userInput);
 					inputField.setText("");
 					
 					saveHistory(userInput);
+
+
 				} catch (Exception ex) {
 					System.out.println(ex);
 				}
+
 			}
+
+
 		}
 	}
 
-	public void appendString(String str,JEditorPane pane,String color) throws BadLocationException, IOException {
+	public void appendString(String str,JEditorPane pane,String color) throws BadLocationException, IOException
+	{
+
+
 		HTMLDocument doc = (HTMLDocument)pane.getDocument();
 		HTMLEditorKit editorKit = (HTMLEditorKit)pane.getEditorKit();
 
 		editorKit.insertHTML(doc, doc.getLength(), str, 0, 0, null);
+
+
 	}
 	
 	public void saveHistory(String s) throws IOException{
+		
+		
+		
 		History.add(s+" | "+getDate());
 		writeListToFile("History.txt",History);
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	public static void showHistory(ArrayList<String> info){
@@ -303,45 +359,177 @@ public class Client extends JFrame
 		try {
 			text.append(readFile("history.txt"));
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		
 		frame.setVisible(true);
 		frame.setSize(500,500);
 		
 	}
 	
+	public static void showCreateWebsite(){
+		JFrame frame = new JFrame("Create a new Website");
+		JPanel panel = new JPanel(new GridBagLayout());
+		final JTextField wName = new JTextField(12);
+		JTextField pw = new JTextField(12);
+		final JTextArea code = new JTextArea(40,40);
+		JScrollPane scrollPane = new JScrollPane(code);
+		final JButton publish = new JButton("Publish website");
+		
+		
+		
+		
+
+		
+		
+		frame.getContentPane().add(panel,BorderLayout.NORTH);
+		
+		GridBagConstraints c = new GridBagConstraints();
+		
+		
+		
+		c.insets = new Insets(1,1,1,1);
+		
+		c.gridx = 1;
+		c.gridy = 0;
+		panel.add(new JLabel("Website name:"), c);
+		
+		c.gridx = 1;
+		c.gridy = 1;
+		panel.add(wName, c);
+
+		c.gridx = 1;
+		c.gridy = 2;
+		panel.add(new JLabel("Website password for editing in the future:"), c);
+		
+		c.gridx = 1;
+		c.gridy = 3;
+		panel.add(pw, c);
+		
+		c.gridx = 1;
+		c.gridy = 4;
+		panel.add(new JLabel("HTML code:"), c);
+
+		c.gridx = 1;
+		c.gridy = 5;
+		panel.add(scrollPane, c);
+		
+		c.gridx = 1;
+		c.gridy = 6;
+		panel.add(publish, c);
+
+
+		
+		frame.setSize(1000,900);
+		frame.setVisible(true);
+		
+		
+		
+		publish.addActionListener(new ActionListener() {
+			 
+            public void actionPerformed(ActionEvent e)
+            {
+            	String webSiteName = wName.getText();
+              
+            	File dir = new File(webSiteName);
+            	dir.mkdir();
+            	
+            	try {
+					writeToFile(webSiteName+"/"+"index.txt",code.getText());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+            	
+            }
+        }); 
+
+		
+		
+
+	}
+	
 	
 	public static void writeListToFile(String fileName,ArrayList<String> text) throws IOException{
-		try {
-			BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
-			for(int x = 0; x < text.size(); x += 1 ){
-				out.write(text.get(x));
-				out.newLine();
-			}
-			out.close();
-		} catch (IOException e) {}
+		 
+				
+				
+				
+		        try {
+		        BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
+		            	
+		        		
+		        		
+		            	
+		        		
+		        		
+		            	for(int x = 0; x < text.size(); x += 1 ){
+		            	
+		            	out.write(text.get(x));
+		                out.newLine();
+		            	}
+		            
+		            out.close();
+		        } catch (IOException e) {}
+		    
 	}
+	
+	public static void writeToFile(String fileName,String text) throws IOException{
+		 
+		
+		
+		
+        try {
+        BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
+            	
+        		
+        		
+            	
+        		
+        		
+            	
+            	
+            	out.append(text);
+                
+            	
+            
+            out.close();
+        } catch (IOException e) {}
+    
+}
 	
 	public static String readFile(String fileName) throws IOException{
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
-		try {
-			StringBuilder sb = new StringBuilder();
-			String line = br.readLine();
-			while (line != null) {
-				sb.append(line);
-				sb.append(System.lineSeparator());
-				line = br.readLine();
-			}
-			String everything = sb.toString();
-			return everything;
-		} finally {
-			br.close();
-		}
+	    try {
+	        StringBuilder sb = new StringBuilder();
+	        String line = br.readLine();
+
+	        while (line != null) {
+	            sb.append(line);
+	            sb.append(System.lineSeparator());
+	            line = br.readLine();
+	        }
+	        String everything = sb.toString();
+	        
+	        return everything;
+	    } finally {
+	        br.close();
+	    }
+	    
+	    
+	    
 	}
 	
 	public static java.util.Date getDate(){
+	
 		java.util.Date date = new java.util.Date();
+		
 		return date;
+	 
 	}
+
+
+
 }
