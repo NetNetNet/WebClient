@@ -33,9 +33,7 @@ import javax.swing.text.html.HTMLEditorKit;
 
 
 @SuppressWarnings("serial")
-public class Client extends JFrame
-{
-	
+public class Client extends JFrame {
 	ArrayList<String> History = new ArrayList<String>();
 	
 	String IP = "localhost";
