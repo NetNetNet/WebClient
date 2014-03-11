@@ -252,68 +252,37 @@ public class Client extends JFrame
 
 
 			}else if(e.getSource() == historyButton){
-				
 				try {
-
-
 					showHistory(History);
-
-
 				} catch (Exception ex) {
 					System.out.println(ex);
 				}
-				
 			}else{
-
 				try {
-
-
 					String userInput = inputField.getText();
 					latest = userInput;
 					
-					
-
 					output.println(userInput);
 					inputField.setText("");
 					
 					saveHistory(userInput);
-
-
 				} catch (Exception ex) {
 					System.out.println(ex);
 				}
-
 			}
-
-
 		}
 	}
 
-	public void appendString(String str,JEditorPane pane,String color) throws BadLocationException, IOException
-	{
-
-
+	public void appendString(String str,JEditorPane pane,String color) throws BadLocationException, IOException {
 		HTMLDocument doc = (HTMLDocument)pane.getDocument();
 		HTMLEditorKit editorKit = (HTMLEditorKit)pane.getEditorKit();
 
 		editorKit.insertHTML(doc, doc.getLength(), str, 0, 0, null);
-
-
 	}
 	
 	public void saveHistory(String s) throws IOException{
-		
-		
-		
 		History.add(s+" | "+getDate());
 		writeListToFile("History.txt",History);
-		
-		
-		
-		
-		
-		
-		
 	}
 	
 	public static void showHistory(ArrayList<String> info){
@@ -337,7 +306,6 @@ public class Client extends JFrame
 			e.printStackTrace();
 		}
 		
-		
 		frame.setVisible(true);
 		frame.setSize(500,500);
 		
@@ -345,50 +313,35 @@ public class Client extends JFrame
 	
 	
 	public static void writeListToFile(String fileName,ArrayList<String> text) throws IOException{
-		        try {
-		        BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
-		        		
-		            	for(int x = 0; x < text.size(); x += 1 ){
-		            	
-		            	out.write(text.get(x));
-		                out.newLine();
-		            	}
-		            
-		            out.close();
-		        } catch (IOException e) {}
-		    
+		try {
+			BufferedWriter out = new BufferedWriter(new FileWriter(fileName));
+			for(int x = 0; x < text.size(); x += 1 ){
+				out.write(text.get(x));
+				out.newLine();
+			}
+			out.close();
+		} catch (IOException e) {}
 	}
 	
 	public static String readFile(String fileName) throws IOException{
 		BufferedReader br = new BufferedReader(new FileReader(fileName));
-	    try {
-	        StringBuilder sb = new StringBuilder();
-	        String line = br.readLine();
-
-	        while (line != null) {
-	            sb.append(line);
-	            sb.append(System.lineSeparator());
-	            line = br.readLine();
-	        }
-	        String everything = sb.toString();
-	        
-	        return everything;
-	    } finally {
-	        br.close();
-	    }
-	    
-	    
-	    
+		try {
+			StringBuilder sb = new StringBuilder();
+			String line = br.readLine();
+			while (line != null) {
+				sb.append(line);
+				sb.append(System.lineSeparator());
+				line = br.readLine();
+			}
+			String everything = sb.toString();
+			return everything;
+		} finally {
+			br.close();
+		}
 	}
 	
 	public static java.util.Date getDate(){
-	
 		java.util.Date date = new java.util.Date();
-		
 		return date;
-	 
 	}
-
-
-
 }
