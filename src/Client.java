@@ -453,10 +453,10 @@ public class Client extends JFrame
 		panel.add(scrollPane, c);
 		
 		c.gridx = 1;
-		c.gridy = 5;
+		c.gridy = 6;
 		panel.add(preview, c);
 		c.gridx = 1;
-		c.gridy = 6;
+		c.gridy = 7;
 		panel.add(publish, c);
 
 		c.gridx = 0;
