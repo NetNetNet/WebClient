@@ -387,6 +387,7 @@ public class Client extends JFrame
 		JPanel buttons = new JPanel(new GridBagLayout());
 		final JTextField wName = new JTextField(12);
 
+		final JTextField pw = new JTextField(12);
 		final JTextArea code = new JTextArea(40,40);
 		JScrollPane scrollPane = new JScrollPane(code);
 		JScrollPane scrollPanel = new JScrollPane(panel);
@@ -431,19 +432,32 @@ public class Client extends JFrame
 
 		c.gridx = 1;
 		c.gridy = 0;
+		panel.add(new JLabel("Website admin password"),c);
+		c.gridx = 1;
+		c.gridy = 1;
+		panel.add(pw,c);
+		c.gridx = 1;
+		c.gridy = 2;
 		panel.add(new JLabel("Post title:"), c);
 
 		c.gridx = 1;
-		c.gridy = 1;
+		c.gridy = 3;
 		panel.add(wName, c);
 
 		c.gridx = 1;
-		c.gridy = 2;
+		c.gridy = 4;
 		panel.add(new JLabel("HTML code:"), c);
 
 		c.gridx = 1;
-		c.gridy = 3;
+		c.gridy = 5;
 		panel.add(scrollPane, c);
+		
+		c.gridx = 1;
+		c.gridy = 5;
+		panel.add(preview, c);
+		c.gridx = 1;
+		c.gridy = 6;
+		panel.add(publish, c);
 
 		c.gridx = 0;
 		c.gridy = 0;
@@ -484,12 +498,7 @@ public class Client extends JFrame
 		buttons.add(syntax, c);
 		
 		
-		c.gridx = 1;
-		c.gridy = 4;
-		panel.add(preview, c);
-		c.gridx = 1;
-		c.gridy = 5;
-		panel.add(publish, c);
+
 
 
 
